@@ -1,13 +1,26 @@
 // Les modules nécessaires
 const express = require("express");
+const path = require("path");
+const webRoutes = require("./routes/web");
+
 const app = express();
 
-// Définition des routes
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+// Définir le moteur de vue
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+// Middleware pour analyser les requêtes entrantes en JSON
+app.use(express.json());
+
+// Définir les fichiers statiques
+app.use(express.static(path.join(__dirname, "public")));
+
+// Définir les routes
+app.use("/", webRoutes);
 
 // Lancement du serveur
+const PORT = process.env.PORT || 3000;
 app.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000");
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
+
