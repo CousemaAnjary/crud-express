@@ -11,5 +11,6 @@ router.get("/", function (req, res) {
 
 router.get('/products', ProductController.index);
 router.get('/product/create', ProductController.create);
+router.post('/product/store', ProductController.store);
 
 module.exports = router;

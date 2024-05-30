@@ -9,8 +9,9 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Middleware pour analyser les requêtes entrantes en JSON
+// // Middleware pour analyser les requêtes entrantes en JSON et URL-encodées
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Définir les fichiers statiques
 app.use(express.static(path.join(__dirname, "public")));
