@@ -1,6 +1,8 @@
 // Les modules nécessaires
 const express = require("express");
-const path = require("path");;
+const path = require("path");
+const session = require("express-session");
+const addAuthState = require('./middlewares/addAuthState');
 const webRoutes = require("./routes/web");
 
 const app = express();
@@ -15,6 +17,16 @@ app.use(express.urlencoded({ extended: true }));
 
 // Définir les fichiers statiques
 app.use(express.static(path.join(__dirname, "public")));
+
+// Configuration de la session
+app.use(session({
+  secret: '123456789',
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Ajouter le middleware pour injecter l'état de connexion
+app.use(addAuthState);
 
 // Définir les routes
 app.use("/", webRoutes);

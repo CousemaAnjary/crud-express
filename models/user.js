@@ -1,4 +1,6 @@
 'use strict';
+const bcrypt = require('bcrypt');
+
 const {
   Model
 } = require('sequelize');
@@ -12,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    validPassword(password) {
+      return bcrypt.compareSync(password, this.password);
+    }
   }
   User.init({
     name: DataTypes.STRING,
@@ -20,6 +26,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
+    hooks: {
+      beforeCreate: async (user, options) => {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(user.password, salt);
+      }
+    }
   });
   return User;
 };

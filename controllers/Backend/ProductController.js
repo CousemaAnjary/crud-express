@@ -31,14 +31,14 @@ module.exports = {
         });
 
         // Redirection vers la liste des produits
-        res.redirect('/products');
+        res.redirect('/admin/products');
     },
 
     async edit(req, res) {
         const product = await Product.findByPk(req.params.id);
 
         if (!product) {
-            return res.redirect('/products');
+            return res.redirect('/admin/products');
         }
 
         res.render('layouts/app', { content: '../backend/product/edit', title: 'Éditer un produit', product });
@@ -52,7 +52,7 @@ module.exports = {
         const product = await Product.findByPk(id);
 
         if (!product) {
-            return res.redirect('/products');
+            return res.redirect('/admin/products');
         }
 
         await product.update({
@@ -61,7 +61,7 @@ module.exports = {
             category,
         });
 
-        res.redirect('/products');
+        res.redirect('/admin/products');
     },
 
     async delete(req, res) {
@@ -70,12 +70,12 @@ module.exports = {
         const product = await Product.findByPk(id);
 
         if (!product) {
-            return res.redirect('/products');
+            return res.redirect('/admin/products');
         }
 
         await product.destroy();
 
-        res.redirect('/products');
+        res.redirect('/admin/products');
     }
 
 };
