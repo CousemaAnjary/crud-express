@@ -19,9 +19,10 @@ router.post("/register", guest, RegisterUserController.store);
 
 router.get("/login", guest, AuthenticatedSessionController.create);
 router.post("/login", guest, AuthenticatedSessionController.store);
+router.get("/admin/logout", auth, AuthenticatedSessionController.destroy);
+
 
 router.get("/admin/dashboard", auth, DashboardController.index);
-router.get("/admin/logout", auth, AuthenticatedSessionController.destroy);
 
 
 // Routes pour les produits
