@@ -17,4 +17,5 @@ const { auth } = require('../middlewares/auth');
 // router.put('/products/:id', auth, ProductController.update);
 // router.delete('/products/:id', auth, ProductController.delete);
 
+
 module.exports = router;
