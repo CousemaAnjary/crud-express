@@ -4,6 +4,7 @@ const path = require("path");
 const session = require("express-session");
 const addAuthState = require('./middlewares/addAuthState');
 const webRoutes = require("./routes/web");
+const apiRoutes = require("./routes/api");
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(addAuthState);
 
 // Définir les routes
 app.use("/", webRoutes);
+app.use("/api", apiRoutes); // Préfixe toutes les routes API avec /api
 
 // Lancement du serveur
 const PORT = process.env.PORT || 3000;
