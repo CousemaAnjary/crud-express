@@ -1,5 +1,8 @@
 const { User } = require('../../models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const secretKey = '123456789'; // Utilisez une clé secrète plus sécurisée en production
 
 module.exports = {
     async create(req, res) {
@@ -19,15 +22,16 @@ module.exports = {
         // Recherche de l'utilisateur
         const user = await User.findOne({ where: { email } });
 
-
         // Vérification de l'utilisateur
         if (!user || !bcrypt.compareSync(password, user.password)) {
             return res.redirect('/login');
         }
 
-        // Création de la session
-        req.session.userId = user.id; // Stocker l'ID utilisateur dans la session
-        req.session.isLoggedIn = true; // Marquer l'utilisateur comme connecté
+        // Création du token JWT
+        const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '1h' });
+
+        // Stocker le token dans un cookie ou l'envoyer en réponse
+        res.cookie('authToken', token, { httpOnly: true });
 
         // Redirection vers la liste des produits
         res.redirect('/admin/dashboard');
@@ -35,8 +39,7 @@ module.exports = {
 
     async destroy(req, res) {
         // Déconnexion de l'utilisateur
-        req.session.destroy();
-
+        res.clearCookie('authToken');
         // Redirection vers la page de connexion
         res.redirect('/login');
     }

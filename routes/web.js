@@ -8,7 +8,6 @@ const RegisterUserController = require("../controllers/Auth/RegisterUserControll
 const AuthenticatedSessionController = require("../controllers/Auth/AuthenticatedSessionController");
 const DashboardController = require("../controllers/Backend/DashboardController");
 
-
 // Définition des routes
 router.get("/", function (req, res) {
   res.send("hello world");
@@ -21,9 +20,7 @@ router.get("/login", guest, AuthenticatedSessionController.create);
 router.post("/login", guest, AuthenticatedSessionController.store);
 router.get("/admin/logout", auth, AuthenticatedSessionController.destroy);
 
-
 router.get("/admin/dashboard", auth, DashboardController.index);
-
 
 // Routes pour les produits
 router.get('/admin/products', auth, ProductController.index);
