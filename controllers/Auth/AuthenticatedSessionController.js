@@ -1,8 +1,7 @@
 const { User } = require('../../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-const secretKey = '123456789'; // Utilisez une clé secrète plus sécurisée en production
+const { secretKey } = require('../../config'); // Importer la clé secrète depuis config.js
 
 module.exports = {
     async create(req, res) {

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secretKey = '123456789'; // Utilisez une clé secrète plus sécurisée en production
+const { secretKey } = require('../config'); // Importer la clé secrète depuis config.js
 
 function addAuthState(req, res, next) {
     const token = req.cookies.authToken; // Lire le cookie authToken
