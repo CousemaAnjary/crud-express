@@ -29,7 +29,7 @@ module.exports = {
         // Création du token JWT
         const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '1h' });
 
-        // Stocker le token dans un cookie ou l'envoyer en réponse
+        // Stocker le token dans un cookie nommé authToken
         res.cookie('authToken', token, { httpOnly: true });
 
         // Redirection vers la liste des produits
